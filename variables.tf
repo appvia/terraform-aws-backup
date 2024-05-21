@@ -17,7 +17,8 @@ variable "vaults" {
     max_retention_days = optional(number)
   }))
 
-  default = []
+  default     = []
+  description = "List of Backup Vaults to be created along with their lock configuration"
 }
 
 variable "plans" {
