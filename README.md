@@ -1,21 +1,40 @@
 ![Github Actions](../../actions/workflows/terraform.yml/badge.svg)
 
-# Terraform <NAME>
+# Terraform AWS Organizations Backup
 
 ## Description
 
-Add a description of the module here
+This module creates an AWS Organization Backup Policy consisting of one or more backup plans to be deployed to
+accounts within the specified Organizational Unit.
 
 ## Usage
 
-Add example usage here
+The following example creates a generalised backup policy targeting all compatible AWS Backup resources. Resources are matched
+if they have a tag with the key `BackupPolicy` and a value matching the plan name - in this case `daily`. This policy is
+applied to all accounts within the specified organizational unit and is run on a daily schedule starting at 3am.
 
 ```hcl
-module "example" {
-  source  = "appvia/<NAME>/aws"
-  version = "0.0.1"
+module "basic" {
+  source  = "appvia/backup/aws"
+  version = "1.0.0"
 
-  # insert variables here
+  name                = "general-backup"
+  organizational_unit = "ou-1tbg-wpzfzxb7"
+
+  plans = [{
+    name                    = "daily"
+    schedule                = "cron(0 3 ? * * *)"
+    start_window_minutes    = "60"
+    complete_window_minutes = "300"
+  }]
+}
+
+resource "aws_s3_bucket" "data_pending_processing" {
+  bucket = "io-appvia-data-pending-processing"
+
+  tags = {
+    BackupPolicy = "daily"
+  }
 }
 ```
 

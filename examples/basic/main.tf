@@ -2,7 +2,8 @@ module "basic" {
   source  = "appvia/backup/aws"
   version = "1.0.0"
 
-  name = "general-backup"
+  name                = "general-backup"
+  organizational_unit = "ou-1tbg-wpzfzxb7"
 
   plans = [{
     name                    = "daily"
@@ -14,7 +15,7 @@ module "basic" {
     backup_role_name        = "lza-backup-service-linked-role"
 
     lifecycle = optional(object({
-      delete_after_days       = "7"
+      delete_after_days = "7"
     }))
 
     copy_backups = [{
