@@ -1,0 +1,14 @@
+Parameters:
+  VaultName:
+    Type: String
+    Description: The name of the AWS Backup Vault to create
+
+Resources:
+  VaultKey:
+    Type: AWS::KMS::Key
+
+  Vault:
+    Type: AWS::Backup::BackupVault
+    Properties:
+      BackupVaultName: !Ref VaultName
+      EncryptionKeyArn: !GetAtt VaultKey.Arn

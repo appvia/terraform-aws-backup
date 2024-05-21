@@ -12,7 +12,7 @@ resource "aws_organizations_policy_attachment" "backup" {
   target_id = var.organizational_unit
 
   depends_on = [
-    aws_cloudformation_stack_set_instance.role,
-    aws_cloudformation_stack_set_instance.vault,
+    # aws_cloudformation_stack_set_instance.role,
+    # aws_cloudformation_stack_set_instance.vault,
   ]
 }

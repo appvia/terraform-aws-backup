@@ -34,7 +34,6 @@ variable "plans" {
     }))
   }))
 
-  default     = []
   description = "List of plan definitions. Each definition defines a backup plan governing the frequency, destinations and retention settings."
 }
 

@@ -40,14 +40,14 @@ resource "aws_cloudformation_stack_set" "role" {
 }
 
 resource "aws_cloudformation_stack_set_instance" "role" {
-  for_each = toset(local.backup_regions)
+  for_each = toset(local.all_role_names)
 
   stack_set_name = aws_cloudformation_stack_set.role.name
-  region         = each.value
+  region         = data.aws_region.current.name
 
   deployment_targets {
     organizational_unit_ids = [
-      "ou-66bv-dp4n113i",
+      var.organizational_unit,
     ]
   }
 }

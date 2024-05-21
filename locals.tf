@@ -13,6 +13,28 @@ locals {
 }
 
 locals {
+  all_vault_names = toset([
+    for p in var.plans : p.vault_name
+    if p.vault_name != "Default"
+  ])
+
+  vaults_per_region = merge([
+    for v in local.all_vault_names : {
+      for r in local.backup_regions :
+      lower("${r}-${v}") => {
+        region     = r
+        vault_name = v
+      }
+    }
+  ]...)
+
+  all_role_names = toset([
+    for p in var.plans : p.backup_role_name
+    if p.backup_role_name != "lza-backup-service-linked-role"
+  ])
+}
+
+locals {
   backup_plans = {
     for p in var.plans :
     p.name => {
@@ -111,4 +133,12 @@ locals {
       }
     }
   }
+}
+
+output "vaults" {
+  value = local.vaults_per_region
+}
+
+output "roles" {
+  value = local.all_role_names
 }

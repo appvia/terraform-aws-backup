@@ -5,7 +5,7 @@ resource "aws_cloudformation_stack_set" "vault" {
   template_body = local.cf_vault_tpl
 
   parameters = {
-    VaultName = "test"
+    VaultName = "BackupVault"
   }
 
   permission_model = "SERVICE_MANAGED"
@@ -39,14 +39,18 @@ resource "aws_cloudformation_stack_set" "vault" {
 }
 
 resource "aws_cloudformation_stack_set_instance" "vault" {
-  for_each = toset(local.backup_regions)
+  for_each = local.vaults_per_region
 
   stack_set_name = aws_cloudformation_stack_set.vault.name
-  region         = each.value
+  region         = each.value.region
+
+  parameter_overrides = {
+    VaultName = each.value.vault_name
+  }
 
   deployment_targets {
     organizational_unit_ids = [
-      "ou-66bv-dp4n113i",
+      var.organizational_unit,
     ]
   }
 }
