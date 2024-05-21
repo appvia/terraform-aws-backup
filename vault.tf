@@ -5,7 +5,10 @@ resource "aws_cloudformation_stack_set" "vault" {
   template_body = local.cf_vault_tpl
 
   parameters = {
-    VaultName = "BackupVault"
+    VaultName                 = "BackupVault"
+    VaultLockChangeableDays   = 0
+    VaultLockMinRetentionDays = 0
+    VaultLockMaxRetentionDays = 0
   }
 
   permission_model = "SERVICE_MANAGED"
@@ -45,7 +48,10 @@ resource "aws_cloudformation_stack_set_instance" "vault" {
   region         = each.value.region
 
   parameter_overrides = {
-    VaultName = each.value.vault_name
+    VaultName                 = each.value.vault.name
+    VaultLockChangeableDays   = each.value.vault.change_grace_days
+    VaultLockMinRetentionDays = each.value.vault.min_retention_days
+    VaultLockMaxRetentionDays = each.value.vault.max_retention_days
   }
 
   deployment_targets {

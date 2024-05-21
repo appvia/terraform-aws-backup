@@ -13,17 +13,12 @@ locals {
 }
 
 locals {
-  all_vault_names = toset([
-    for p in var.plans : p.vault_name
-    if p.vault_name != "Default"
-  ])
-
   vaults_per_region = merge([
-    for v in local.all_vault_names : {
+    for v in var.vaults : {
       for r in local.backup_regions :
-      lower("${r}-${v}") => {
-        region     = r
-        vault_name = v
+      lower("${r}-${v.name}") => {
+        vault  = v
+        region = r
       }
     }
   ]...)
