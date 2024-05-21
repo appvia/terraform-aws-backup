@@ -45,6 +45,10 @@ resource "aws_cloudformation_stack_set_instance" "role" {
   stack_set_name = aws_cloudformation_stack_set.role.name
   region         = data.aws_region.current.name
 
+  parameter_overrides = {
+    RoleName = each.value
+  }
+
   deployment_targets {
     organizational_unit_ids = [
       var.organizational_unit,

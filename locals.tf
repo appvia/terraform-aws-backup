@@ -134,11 +134,3 @@ locals {
     }
   }
 }
-
-output "vaults" {
-  value = local.vaults_per_region
-}
-
-output "roles" {
-  value = local.all_role_names
-}
