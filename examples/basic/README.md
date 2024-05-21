@@ -13,7 +13,9 @@ No providers.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_basic"></a> [basic](#module\_basic) | appvia/backup/aws | 1.0.0 |
 
 ## Resources
 

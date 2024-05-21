@@ -34,15 +34,17 @@ variable "plans" {
     }))
   }))
 
-  default = []
+  default     = []
+  description = "List of plan definitions. Each definition defines a backup plan governing the frequency, destinations and retention settings."
 }
 
 variable "organizational_unit" {
   type        = string
-  description = "The organizational unit to attach the backup policy to"
+  description = "The organizational unit to attach the backup policy to."
 }
 
 variable "tags" {
-  type    = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
+  description = "Map of tags to apply to resources create by this module. These are also passed down to individual backups."
 }
