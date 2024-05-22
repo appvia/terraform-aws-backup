@@ -60,8 +60,6 @@ resource "aws_cloudformation_stack_set_instance" "vault" {
   }
 
   deployment_targets {
-    organizational_unit_ids = [
-      var.organizational_unit,
-    ]
+    organizational_unit_ids = var.deployment_targets
   }
 }
