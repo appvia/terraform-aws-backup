@@ -49,9 +49,10 @@ variable "plans" {
   description = "List of plan definitions. Each definition defines a backup plan governing the frequency, destinations and retention settings."
 }
 
-variable "organizational_unit" {
-  type        = string
-  description = "The organizational unit to attach the backup policy to."
+variable "deployment_targets" {
+  type        = list(string)
+  default     = []
+  description = "The accounts or organizational unit to attach the backup policy to."
 }
 
 variable "tags" {
