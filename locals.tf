@@ -98,7 +98,7 @@ locals {
         tags = {
           backup-policy = {
             iam_role_arn = {
-              "@@assign" = "arn:aws:iam::$account:role/${p.backup_role_name}"
+              "@@assign" = "arn:aws:iam::$account:role/backup/${p.backup_role_name}"
             }
 
             tag_key = {
